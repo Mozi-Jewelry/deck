@@ -30,6 +30,14 @@
  */
 
 /**
+ * Directory model
+ *
+ * @typedef {object} Directory
+ * @property {string} name
+ * @property {array} boards
+ */
+
+/**
  * Stack model
  *
  * @typedef {object} Stack

@@ -90,6 +90,8 @@ return [
 		['name' => 'label#delete', 'url' => '/labels/{labelId}', 'verb' => 'DELETE'],
 
 		// api
+		['name' => 'directory_api#index', 'url' => '/api/v{apiVersion}/directories', 'verb' => 'GET'],
+
 		['name' => 'board_api#index', 'url' => '/api/v{apiVersion}/boards', 'verb' => 'GET'],
 		['name' => 'board_api#get', 'url' => '/api/v{apiVersion}/boards/{boardId}', 'verb' => 'GET'],
 		['name' => 'board_api#create', 'url' => '/api/v{apiVersion}/boards', 'verb' => 'POST'],

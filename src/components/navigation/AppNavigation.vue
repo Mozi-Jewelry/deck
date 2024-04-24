@@ -30,6 +30,16 @@
 					<CalendarIcon :size="20" />
 				</template>
 			</NcAppNavigationItem>
+			<AppNavigationDirectory id="deck-navigation-directories-all"
+						to="/board"
+						:directories="directories"
+						:open-on-add-boards="true"
+						:default-open="false"
+						icon="icon-deck">
+				<template #icon>
+					<DeckIcon :size="16" />
+				</template>
+			</AppNavigationDirectory>
 			<AppNavigationBoardCategory id="deck-navigation-all"
 				to="/board"
 				:text="t('deck', 'All boards')"
@@ -124,6 +134,7 @@ import ClickOutside from 'vue-click-outside'
 import { NcAppNavigation, NcAppNavigationItem, NcAppNavigationSettings, NcSelect, NcButton } from '@nextcloud/vue'
 import AppNavigationAddBoard from './AppNavigationAddBoard.vue'
 import AppNavigationBoardCategory from './AppNavigationBoardCategory.vue'
+import AppNavigationDirectory from './AppNavigationDirectory.vue'
 import { loadState } from '@nextcloud/initial-state'
 import { generateOcsUrl } from '@nextcloud/router'
 import { getCurrentUser } from '@nextcloud/auth'
@@ -173,7 +184,9 @@ export default {
 	},
 	computed: {
 		...mapGetters([
+			'directories',
 			'noneArchivedBoards',
+			'directories',
 			'archivedBoards',
 			'sharedBoards',
 		]),

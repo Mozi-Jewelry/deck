@@ -28,6 +28,7 @@ use OCA\Deck\Db\CardMapper;
 use OCA\Deck\Service\BoardService;
 use OCA\Deck\Service\CardService;
 use OCA\Deck\Service\ConfigService;
+use OCA\Deck\Service\DirectoryService;
 use OCA\Deck\Service\PermissionService;
 use OCA\Files\Event\LoadSidebar;
 use OCA\Text\Event\LoadEditor;
@@ -52,6 +53,7 @@ class PageController extends Controller {
 		private PermissionService $permissionService,
 		private IInitialState $initialState,
 		private BoardService $boardService,
+		private DirectoryService $directoryService,
 		private ConfigService $configService,
 		private IEventDispatcher $eventDispatcher,
 		private CardMapper $cardMapper,
@@ -70,6 +72,7 @@ class PageController extends Controller {
 		$this->initialState->provideInitialState('config', $this->configService->getAll());
 
 		$this->initialState->provideInitialState('initialBoards', $this->boardService->findAll());
+		$this->initialState->provideInitialState('initialDirectories', $this->directoryService->findAll());
 
 		$this->eventDispatcher->dispatchTyped(new LoadSidebar());
 		$this->eventDispatcher->dispatchTyped(new CollaborationResourcesEvent());

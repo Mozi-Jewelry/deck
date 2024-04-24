@@ -67,6 +67,7 @@ export default new Vuex.Store({
 		sidebarShown: false,
 		currentBoard: null,
 		currentCard: null,
+		directories: loadState('deck', 'initialDirectories', []),
 		boards: loadState('deck', 'initialBoards', []),
 		sharees: [],
 		assignableUsers: [],
@@ -90,6 +91,9 @@ export default new Vuex.Store({
 		},
 		getFilter: state => {
 			return state.filter
+		},
+		directories: state => {
+			return state.directories
 		},
 		boards: state => {
 			return state.boards
