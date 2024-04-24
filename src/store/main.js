@@ -35,9 +35,11 @@ import comment from './comment.js'
 import trashbin from './trashbin.js'
 import attachment from './attachment.js'
 import overview from './overview.js'
+import {DirectoryApi} from "../services/DirectoryApi";
 Vue.use(Vuex)
 
 const apiClient = new BoardApi()
+const directoryClient = new DirectoryApi()
 const debug = process.env.NODE_ENV !== 'production'
 
 export const BOARD_FILTERS = {
@@ -434,6 +436,10 @@ export default new Vuex.Store({
 		async loadBoards({ commit }) {
 			const boards = await apiClient.loadBoards()
 			commit('setBoards', boards)
+		},
+		async loadDirectories({ commit }) {
+			const boards = await directoryClient.loadDirectories()
+			commit('setDirectories', boards)
 		},
 		async loadSharees({ commit }, query) {
 			const params = new URLSearchParams()

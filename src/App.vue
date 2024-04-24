@@ -116,9 +116,16 @@ export default {
 	},
 	created() {
 		const initialState = loadState('deck', 'initialBoards', null)
+		const initialStateDirectories = loadState('deck', 'initialDirectories', null)
+
 		if (initialState !== null) {
 			this.$store.dispatch('loadBoards')
 		}
+
+		if (initialStateDirectories !== null) {
+			this.$store.dispatch('loadDirectories')
+		}
+
 		this.$store.dispatch('loadSharees')
 	},
 	mounted() {

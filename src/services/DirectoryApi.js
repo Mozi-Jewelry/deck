@@ -29,6 +29,11 @@ import '../models/index.js'
  */
 export class DirectoryApi {
 
+	url(url) {
+		url = `/apps/deck${url}`
+		return generateUrl(url)
+	}
+
 	loadDirectories() {
 		return axios.get(this.url('/directories'))
 			.then(
