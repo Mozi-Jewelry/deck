@@ -135,6 +135,7 @@ export default {
 			currentScrollPosX: null,
 			currentMousePosX: null,
 			localModal: null,
+			interval: null
 		}
 	},
 	computed: {
@@ -171,8 +172,14 @@ export default {
 		this.$root.$on('open-card', (cardId) => {
 			this.localModal = cardId
 		})
+
+		const self = this
+		this.interval = setInterval(async function() {
+		   await self.$store.dispatch('loadStacks', self.id)
+		}, 10000)
 	},
 	beforeDestroy() {
+                clearInterval(this.interval)
 		this.session.close()
 	},
 	methods: {

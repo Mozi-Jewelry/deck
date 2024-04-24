@@ -32,7 +32,7 @@
 			@click="assignCardToMe()">
 			{{ t('deck', 'Assign to me') }}
 		</NcActionButton>
-		<NcActionButton v-if="canEdit && isCurrentUserAssigned"
+		<NcActionButton v-if="false && canEdit && isCurrentUserAssigned"
 			icon="icon-user"
 			:close-after-click="true"
 			@click="unassignCardFromMe()">
