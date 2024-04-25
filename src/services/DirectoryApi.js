@@ -21,7 +21,7 @@
  */
 
 import axios from '@nextcloud/axios'
-import { generateUrl } from '@nextcloud/router'
+import { generateOcsUrl } from '@nextcloud/router'
 import '../models/index.js'
 
 /**
@@ -35,7 +35,7 @@ export class DirectoryApi {
 	}
 
 	loadDirectories() {
-		return axios.get(this.url('/directories'))
+		return axios.get(generateOcsUrl(`apps/deck/api/v1.0/directories`))
 			.then(
 				(response) => {
 					return Promise.resolve(response.data)

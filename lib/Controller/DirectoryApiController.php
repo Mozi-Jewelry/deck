@@ -1,8 +1,6 @@
 <?php
 namespace OCA\Deck\Controller;
 
-use OCA\Deck\Db\Board;
-use OCA\Deck\Service\BoardService;
 use OCA\Deck\Service\DirectoryService;
 use OCA\Deck\StatusException;
 use OCP\AppFramework\ApiController;
@@ -40,7 +38,8 @@ class DirectoryApiController extends ApiController
 	 *
 	 * @throws StatusException
 	 */
-	public function index() {
+	public function index()
+	{
 		$directories = $this->directoryService->setUserId($this->userId)->findAll();
 		$response = new DataResponse($directories, HTTP::STATUS_OK);
 		return $response;
