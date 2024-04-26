@@ -68,7 +68,7 @@ class DirectoryService {
 			$boards = [];
 
 			foreach($userBoards as $board) {
-				if (in_array($board->getId(), $directoriesBoards[$directory->getId()])) {
+				if (in_array($board->getId(), $directoriesBoards[$directory->getId()] ?? [])) {
 					$boards[] = $board;
 				}
 			}

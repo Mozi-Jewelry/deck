@@ -156,6 +156,7 @@ export default {
 		NcButton,
 		AppNavigationAddBoard,
 		AppNavigationBoardCategory,
+		AppNavigationDirectory,
 		NcSelect,
 		NcAppNavigationItem,
 		ArchiveIcon,
