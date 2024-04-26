@@ -1,6 +1,6 @@
 <template>
 	<NcAppNavigationItem
-		v-for="directory in directoriesSorted" :key="directory.id"
+		:key="directory.id"
 		:name="directory.name"
 		:to="to"
 		:exact="true"
