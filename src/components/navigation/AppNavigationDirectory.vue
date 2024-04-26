@@ -1,5 +1,5 @@
 <template>
-	<NcAppNavigationItem v-if="directories.length > 0"#
+	<NcAppNavigationItem
 		v-for="directory in directories" :key="directory.id"
 		:name="directory.name"
 		:to="to"
