@@ -5,6 +5,10 @@
 		:exact="true"
 		:allow-collapse="collapsible"
 		:open="opened">
+		<AppNavigationBoard v-for="board in boardsSorted" :key="board.id" :board="board" />
+		<template #icon>
+			<slot name="icon" />
+		</template>
 	</NcAppNavigationItem>
 </template>
 
