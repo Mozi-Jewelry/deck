@@ -27,6 +27,7 @@ class DirectoryApiController extends ApiController
 		private $userId,
 	) {
 		parent::__construct($appName, $request);
+		$this->directoryService->setUserId($this->userId);
 	}
 
 	/**
@@ -40,7 +41,7 @@ class DirectoryApiController extends ApiController
 	 */
 	public function index()
 	{
-		$directories = $this->directoryService->setUserId($this->userId)->findAll();
+		$directories = $this->directoryService->findAll();
 		$response = new DataResponse($directories, HTTP::STATUS_OK);
 		return $response;
 	}
