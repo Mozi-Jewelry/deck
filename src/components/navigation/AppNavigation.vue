@@ -30,16 +30,6 @@
 					<CalendarIcon :size="20" />
 				</template>
 			</NcAppNavigationItem>
-			<AppNavigationDirectory id="deck-navigation-directories-all"
-						to="/board"
-						:directories="directories"
-						:open-on-add-boards="true"
-						:default-open="false"
-						icon="icon-deck">
-				<template #icon>
-					<DeckIcon :size="16" />
-				</template>
-			</AppNavigationDirectory>
 			<AppNavigationBoardCategory id="deck-navigation-all"
 				to="/board"
 				:text="t('deck', 'All boards')"
@@ -51,6 +41,16 @@
 					<DeckIcon :size="16" />
 				</template>
 			</AppNavigationBoardCategory>
+			<AppNavigationDirectory id="deck-navigation-directories-all"
+															to="/board"
+															:directories="directories"
+															:open-on-add-boards="true"
+															:default-open="false"
+															icon="icon-deck">
+				<template #icon>
+					<DeckIcon :size="16" />
+				</template>
+			</AppNavigationDirectory>
 			<AppNavigationBoardCategory id="deck-navigation-archived"
 				to="/board/archived"
 				:text="t('deck', 'Archived boards')"
@@ -186,7 +186,6 @@ export default {
 		...mapGetters([
 			'directories',
 			'noneArchivedBoards',
-			'directories',
 			'archivedBoards',
 			'sharedBoards',
 		]),
