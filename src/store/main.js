@@ -252,6 +252,9 @@ export default new Vuex.Store({
 		setBoards(state, boards) {
 			state.boards = boards
 		},
+		setDirectories(state, directories) {
+			state.directories = directories
+		},
 		setSharees(state, shareesUsersAndGroups) {
 			Vue.set(state, 'sharees', shareesUsersAndGroups.exact.users)
 			state.sharees.push(...shareesUsersAndGroups.exact.groups)
