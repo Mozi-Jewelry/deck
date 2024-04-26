@@ -30,12 +30,15 @@ import '../models/index.js'
 export class DirectoryApi {
 
 	url(url) {
-		url = `/apps/deck${url}`
-		return generateUrl(url)
+		return generateOcsUrl(`apps/deck/api/v1.0/${url}`)
 	}
 
 	loadDirectories() {
-		return axios.get(generateOcsUrl(`apps/deck/api/v1.0/directories`))
+		return axios.get(this.url(`directories`),
+			{
+				headers: { 'OCS-APIRequest': 'true' },
+			}
+		)
 			.then(
 				(response) => {
 					return Promise.resolve(response.data)
