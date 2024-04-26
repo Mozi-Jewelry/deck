@@ -20,15 +20,11 @@ export default {
 		AppNavigationBoard,
 	},
 	props: {
-		to: {
+		name: {
 			type: String,
-			default: '',
+			required: true
 		},
-		id: {
-			type: String,
-			required: true,
-		},
-		directories: {
+		boards: {
 			type: Array,
 			required: true,
 		},
