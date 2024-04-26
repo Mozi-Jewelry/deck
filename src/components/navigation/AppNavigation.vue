@@ -43,7 +43,7 @@
 			</AppNavigationBoardCategory>
 			<AppNavigationDirectory id="deck-navigation-directories-all"
 															v-for="directory in directories"
-															:name="directory.name"
+															:text="directory.name"
 															:boards="directory.boards"
 															:open-on-add-boards="true"
 															:default-open="false"

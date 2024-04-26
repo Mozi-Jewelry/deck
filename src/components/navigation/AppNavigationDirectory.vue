@@ -1,8 +1,7 @@
 <template>
 	<NcAppNavigationItem
-		:key="directory.id"
-		:name="directory.name"
-		:to="to"
+		:name="text"
+		to="/"
 		:exact="true"
 		:allow-collapse="collapsible"
 		:open="opened">
@@ -20,7 +19,7 @@ export default {
 		AppNavigationBoard,
 	},
 	props: {
-		name: {
+		text: {
 			type: String,
 			required: true
 		},
@@ -47,8 +46,8 @@ export default {
 		}
 	},
 	computed: {
-		directoriesSorted() {
-			return [...this.directories].sort((a, b) => a.title.localeCompare(b.title))
+		boardsSorted() {
+			return [...this.boards].sort((a, b) => a.title.localeCompare(b.title))
 		},
 		collapsible() {
 			return this.boards.length > 0
