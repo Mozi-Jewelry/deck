@@ -1,6 +1,6 @@
 <template>
 	<NcAppNavigationItem
-		v-for="directory in directories" :key="directory.id"
+		v-for="directory in directoriesSorted" :key="directory.id"
 		:name="directory.name"
 		:to="to"
 		:exact="true"
@@ -51,8 +51,8 @@ export default {
 		}
 	},
 	computed: {
-		boardsSorted() {
-			return [...this.boards].sort((a, b) => a.title.localeCompare(b.title))
+		directoriesSorted() {
+			return [...this.directories].sort((a, b) => a.title.localeCompare(b.title))
 		},
 		collapsible() {
 			return this.boards.length > 0
