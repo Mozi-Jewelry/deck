@@ -76,7 +76,7 @@
 						data-click-closes-sidebar="true"
 						data-dragscroll-enabled
 						class="stack-draggable-wrapper">
-						<Stack :stack="stack" :dragging="!isNotDirectory && draggingStack" data-click-closes-sidebar="true" />
+						<Stack :stack="stack" :dragging="draggingStack" data-click-closes-sidebar="true" />
 					</Draggable>
 				</Container>
 			</div>
