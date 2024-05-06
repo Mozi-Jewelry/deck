@@ -76,7 +76,7 @@ class DirectoryService {
 				}
 			}
 
-			$directories[$key] = $directory->setBoards($boards);
+			$directory->setBoards($boards);
 		}
 
 		$directoriesPrepared = [];
