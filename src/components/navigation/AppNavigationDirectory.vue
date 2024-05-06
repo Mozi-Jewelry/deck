@@ -1,7 +1,7 @@
 <template>
 	<NcAppNavigationItem
 		:name="text"
-		to="/"
+		:to="routeTo"
 		:exact="true"
 		:allow-collapse="collapsible"
 		:open="opened">
@@ -23,6 +23,10 @@ export default {
 		AppNavigationBoard,
 	},
 	props: {
+		id: {
+			type: String,
+			required: true
+		},
 		text: {
 			type: String,
 			required: true
@@ -55,6 +59,12 @@ export default {
 		},
 		collapsible() {
 			return this.boards.length > 0
+		},
+		routeTo() {
+			return {
+				name: 'directory',
+				params: { id: this.id },
+			}
 		},
 	},
 	watch: {
