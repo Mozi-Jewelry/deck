@@ -29,13 +29,14 @@ const apiClient = new StackApi()
 export default {
 	state: {
 		stacks: [],
+		stacksInDirectory: []
 	},
 	getters: {
 		stacksByBoard: state => (id) => {
 			return state.stacks.filter((stack) => stack.boardId === id).sort((a, b) => a.order - b.order)
 		},
 		stacksByDirectory: state => (id) => {
-			return state.stacks
+			return state.stacks.filter((stack) => stack.directoryId === id).sort((a, b) => a.order - b.order)
 		},
 		stackById: state => (id) => {
 			return state.stacks.find((stack) => stack.id === id)
@@ -104,7 +105,9 @@ export default {
 			const stacks = await apiClient.loadDirectoryStacks(directoryId)
 			const cards = []
 			for (const i in stacks) {
-				const stack = stacks[i]
+				let stack = stacks[i]
+				stack.directoryId = directoryId
+
 				for (const j in stack.cards) {
 					cards.push(stack.cards[j])
 				}
