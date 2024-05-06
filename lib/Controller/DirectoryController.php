@@ -32,12 +32,11 @@ class DirectoryController extends ApiController
 
 	/**
 	 * @NoAdminRequired
-	 * @NoCSRFRequired
 	 * @param int $directoryId
 	 * @return \OCP\AppFramework\Db\Entity
 	 */
 	public function read(int $directoryId)
 	{
-		return $this->directoryService->getDirectoryById($directoryId);
+		return $this->directoryService->findById($directoryId);
 	}
 }
