@@ -62,6 +62,8 @@ export default {
 			if (this.openOnAddBoards === true && prevVal.length < newVal.length) {
 				this.opened = true
 			}
+
+			if (newVal.filter(board => ))
 		},
 	},
 	mounted() {

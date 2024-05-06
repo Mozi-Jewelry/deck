@@ -33,6 +33,14 @@
 			</template>
 			<SharingTabSidebar :board="board" />
 		</NcAppSidebarTab>
+		<NcAppSidebarTab id="settings"
+										 :order="0"
+										 :name="t('deck', 'Settings')">
+			<template #icon>
+				<SharingIcon :size="20" />
+			</template>
+			<SharingTabSidebar :board="board" />
+		</NcAppSidebarTab>
 
 		<NcAppSidebarTab id="tags"
 			:order="1"

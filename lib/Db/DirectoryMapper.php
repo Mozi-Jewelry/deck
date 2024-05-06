@@ -28,6 +28,16 @@ class DirectoryMapper extends QBMapper {
 		return $this->findEntities($qb);
 	}
 
+	public function findById($directoryId): array
+	{
+		$qb = $this->db->getQueryBuilder();
+		$qb->select('*')
+			->from('deck_directories')
+			->where($qb->expr()->eq('id', $qb->createNamedParameter($directoryId, IQueryBuilder::PARAM_INT)));
+
+		return $this->findEntity($qb);
+	}
+
 	public function getAllBoardsId(): array
 	{
 		$qb = $this->db->getQueryBuilder();
@@ -42,5 +52,16 @@ class DirectoryMapper extends QBMapper {
 		}
 
 		return $decks;
+	}
+
+	public function getAllBoardsIdFromDirectory($directoryId): array
+	{
+		$qb = $this->db->getQueryBuilder();
+		$qb->select('directory_id', 'deck_id')
+			->from('deck_directory_decks')
+			->where($qb->expr()->eq('directory_id', $qb->createNamedParameter($directoryId, IQueryBuilder::PARAM_INT)));;
+
+		$result = $qb->executeQuery();
+		return array_map(fn($directory) => $directory['deck_id'], $result);
 	}
 }

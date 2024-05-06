@@ -42,7 +42,14 @@ class DirectoryApiController extends ApiController
 	public function index()
 	{
 		$directories = $this->directoryService->findAll();
-		$response = new DataResponse($directories, HTTP::STATUS_OK);
+		$response = new DataResponse(array_values($directories), HTTP::STATUS_OK);
+		return $response;
+	}
+
+	public function show(int $directoryId)
+	{
+		$stacks = $this->directoryService->getDirectoryCards($directoryId);
+		$response = new DataResponse(array_values($stacks), HTTP::STATUS_OK);
 		return $response;
 	}
 }

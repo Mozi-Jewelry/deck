@@ -61,8 +61,9 @@ export default {
 	},
 	computed: {
 		routeTo() {
+			const type = this.board.type === 'directory' ? 'directory' : 'board'
 			return {
-				name: 'board',
+				name: type,
 				params: { id: this.board.id },
 			}
 		},

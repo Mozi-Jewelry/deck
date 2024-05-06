@@ -34,6 +34,9 @@ export default {
 		stacksByBoard: state => (id) => {
 			return state.stacks.filter((stack) => stack.boardId === id).sort((a, b) => a.order - b.order)
 		},
+		stacksByDirectory: state => (id) => {
+			return state.stacks.filter((stack) => stack.boardId === id).sort((a, b) => a.order - b.order)
+		},
 		stackById: state => (id) => {
 			return state.stacks.find((stack) => stack.id === id)
 		},
@@ -78,11 +81,16 @@ export default {
 					commit('orderStack', { stack, addedIndex, removedIndex })
 				})
 		},
-		async loadStacks({ commit }, boardId) {
+		async loadStacks({ commit }, boardId, directory) {
 			let call = 'loadStacks'
 			if (this.state.showArchived === true) {
 				call = 'loadArchivedStacks'
 			}
+
+			if (directory === true) {
+				call = 'loadDirectoryStacks'
+			}
+
 			const stacks = await apiClient[call](boardId)
 			const cards = []
 			for (const i in stacks) {

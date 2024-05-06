@@ -139,6 +139,65 @@ const router = new Router({
 				},
 			],
 		},
+		{
+			path: '/directory/:id',
+			name: 'directory',
+			components: {
+				default: Board,
+				sidebar: Sidebar,
+			},
+			props: {
+				default: (route) => {
+					return {
+						id: parseInt(route.params.id, 10),
+						type: 'directory'
+					}
+				},
+			},
+			children: [
+				{
+					path: 'details',
+					name: 'board.details',
+					components: {
+						default: Boards,
+						sidebar: BoardSidebar,
+					},
+					props: {
+						default: (route) => {
+							return {
+								id: parseInt(route.params.id, 10),
+							}
+						},
+						sidebar: (route) => {
+							return {
+								id: parseInt(route.params.id, 10),
+							}
+						},
+					},
+				},
+				{
+					path: 'card/:cardId/:tabId?/:tabQuery?',
+					name: 'card',
+					components: {
+						sidebar: CardSidebar,
+					},
+					props: {
+						default: (route) => {
+							return {
+								cardId: parseInt(route.params.cardId, 10),
+							}
+						},
+						sidebar: (route) => {
+							return {
+								id: parseInt(route.params.cardId, 10),
+								tabId: route.params.tabId,
+								tabQuery: route.params.tabQuery,
+							}
+						},
+					},
+				},
+			],
+		},
 		// redirects to keep compatibility to 1.0.0 routes
 		{
 			path: '/boards/:id',

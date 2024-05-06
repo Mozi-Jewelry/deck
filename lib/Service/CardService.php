@@ -62,6 +62,7 @@ class CardService {
 	private LabelMapper $labelMapper;
 	private PermissionService $permissionService;
 	private BoardService $boardService;
+	private DirectoryService $directoryService;
 	private NotificationHelper $notificationHelper;
 	private AssignmentMapper $assignedUsersMapper;
 	private AttachmentService $attachmentService;
@@ -83,6 +84,7 @@ class CardService {
 		LabelMapper $labelMapper,
 		PermissionService $permissionService,
 		BoardService $boardService,
+		DirectoryService $directoryService,
 		NotificationHelper $notificationHelper,
 		AssignmentMapper $assignedUsersMapper,
 		AttachmentService $attachmentService,

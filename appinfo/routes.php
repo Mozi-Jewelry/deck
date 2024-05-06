@@ -147,6 +147,7 @@ return [
 	],
 	'ocs' => [
 		['name' => 'directory_api#index', 'url' => '/api/v{apiVersion}/directories', 'verb' => 'GET'],
+		['name' => 'directory_api#show', 'url' => '/api/v{apiVersion}/directories/{directoryId}', 'verb' => 'GET'],
 		['name' => 'Config#get', 'url' => '/api/v{apiVersion}/config', 'verb' => 'GET'],
 		['name' => 'Config#setValue', 'url' => '/api/v{apiVersion}/config/{key}', 'verb' => 'POST'],
 

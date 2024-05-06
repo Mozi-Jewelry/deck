@@ -23,6 +23,7 @@
 import axios from '@nextcloud/axios'
 import { generateUrl } from '@nextcloud/router'
 import '../models/index.js'
+import {DirectoryApi} from "./DirectoryApi";
 
 export class StackApi {
 
@@ -44,6 +45,10 @@ export class StackApi {
 			.catch((err) => {
 				return Promise.reject(err)
 			})
+	}
+
+	loadDirectoryStacks(directoryId) {
+		return DirectoryApi.loadDirectoriesStack(directoryId)
 	}
 
 	deletedStacks(boardId) {

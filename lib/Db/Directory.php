@@ -9,6 +9,7 @@ namespace OCA\Deck\Db;
 class Directory extends RelationalEntity {
 	protected $name;
 	protected $boards = [];
+	protected $stacks = [];
 
 	public function __construct() {
 		$this->addType('id', 'integer');
@@ -20,6 +21,16 @@ class Directory extends RelationalEntity {
 		$json = parent::jsonSerialize();
 		$json['boards'] = $this->boards ?? [];
 		return $json;
+	}
+
+	public function setStacks($stacks)
+	{
+		$this->stacks = $stacks;
+	}
+
+	public function getStacks()
+	{
+		return $this->stacks;
 	}
 
 	/**

@@ -68,6 +68,7 @@ export default new Vuex.Store({
 		showCardCover: localStorage.getItem('deck.showCardCover') === 'true',
 		sidebarShown: false,
 		currentBoard: null,
+		currentDirectory: null,
 		currentCard: null,
 		directories: loadState('deck', 'initialDirectories', []),
 		boards: loadState('deck', 'initialBoards', []),

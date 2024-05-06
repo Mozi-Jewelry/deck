@@ -7,6 +7,7 @@ use OCA\Deck\AppInfo\Application;
 use OCA\Deck\BadRequestException;
 use OCA\Deck\Db\Acl;
 use OCA\Deck\Db\Board;
+use OCA\Deck\Db\CardMapper;
 use OCA\Deck\Db\Directory;
 use OCA\Deck\Db\DirectoryMapper;
 use OCA\Deck\Db\IPermissionMapper;
@@ -42,6 +43,8 @@ class DirectoryService {
 	public function __construct(
 		private DirectoryMapper $directoryMapper,
 		private BoardService $boardService,
+		private StackMapper $stackMapper,
+		private CardMapper $cardMapper,
 		private ?string $userId
 	) {
 
@@ -76,8 +79,45 @@ class DirectoryService {
 			$directories[$key] = $directory->setBoards($boards);
 		}
 
-		return array_filter($directories, function($directory) {
-			return !empty($directory->getBoards());
-		});
+		$directoriesPrepared = [];
+		foreach($directories as $directory) {
+			if(!empty($directory->getBoards())) {
+				$directoriesPrepared[$directory->getId()] = $directory;
+			}
+		}
+
+		return $directoriesPrepared;
+	}
+
+	public function getDirectoryCards($directoryId): array
+	{
+		$directory = $this->directoryMapper->findById($directoryId);
+		if (!$directory) {
+			return [];
+		}
+
+		$decks = $this->directoryMapper->getAllBoardsIdFromDirectory($directory->getId());
+		$stacks = [];
+		foreach($decks as $deck) {
+			$deckStacks = $this->stackMapper->findAll($deck->getId());
+			/** @var Stack $stack */
+			foreach($deckStacks as $stack) {
+				$title = mb_strtolower($stack->getTitle());
+				if (!$stacks[$title]) {
+					$stacks[$title] = $stack;
+				}
+
+				$cards = $this->cardMapper->findAllByStack($stack->getId());
+				$fullCards = $stacks[$title]->getCards();
+				foreach ($cards as $card) {
+					$fullCard = $this->cardMapper->find($card->getId());
+					array_push($fullCards, $fullCard);
+				}
+				$stacks[$title]->setCards($fullCards);
+			}
+		}
+
+		$directory->setStacks($stacks);
+		return $directory;
 	}
 }

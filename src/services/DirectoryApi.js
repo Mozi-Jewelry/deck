@@ -51,4 +51,23 @@ export class DirectoryApi {
 				return Promise.reject(err)
 			})
 	}
+
+	loadDirectoriesStack(directoryId) {
+		return axios.get(this.url(`directories/${directoryId}`),
+			{
+				headers: { 'OCS-APIRequest': 'true' },
+			}
+		)
+			.then(
+				(response) => {
+					return Promise.resolve(response.data)
+				},
+				(err) => {
+					return Promise.reject(err)
+				},
+			)
+			.catch((err) => {
+				return Promise.reject(err)
+			})
+	}
 }

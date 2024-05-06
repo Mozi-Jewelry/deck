@@ -126,6 +126,10 @@ export default {
 			type: Number,
 			default: null,
 		},
+		type: {
+			type: String,
+			default: 'board',
+		}
 	},
 	data() {
 		return {
@@ -142,6 +146,7 @@ export default {
 		...mapState({
 			isFullApp: state => state.isFullApp,
 			board: state => state.currentBoard,
+			directory: state => state.currentDirectory,
 			showArchived: state => state.showArchived,
 		}),
 		...mapGetters([
@@ -149,6 +154,10 @@ export default {
 			'canManage',
 		]),
 		stacksByBoard() {
+			if (this.type === 'directory') {
+				 return this.$store.getters.stacksByDirectory(this.board.id)
+			}
+
 			return this.$store.getters.stacksByBoard(this.board.id)
 		},
 		dragHandleSelector() {
@@ -160,6 +169,9 @@ export default {
 	},
 	watch: {
 		id(newValue, oldValue) {
+			this.fetchData()
+		},
+		type(newValue, oldValue) {
 			this.fetchData()
 		},
 		showArchived() {
