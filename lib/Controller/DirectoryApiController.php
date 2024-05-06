@@ -50,7 +50,6 @@ class DirectoryApiController extends ApiController
 	 * @NoAdminRequired
 	 * @CORS
 	 * @NoCSRFRequired
-	 * @throws StatusException
 	 */
 	public function show(int $directoryId)
 	{

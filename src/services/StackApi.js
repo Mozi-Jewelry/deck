@@ -25,6 +25,8 @@ import { generateUrl } from '@nextcloud/router'
 import '../models/index.js'
 import {DirectoryApi} from "./DirectoryApi";
 
+const directoryApi = new DirectoryApi()
+
 export class StackApi {
 
 	url(url) {
@@ -48,7 +50,7 @@ export class StackApi {
 	}
 
 	loadDirectoryStacks(directoryId) {
-		return (new DirectoryApi).loadDirectoriesStack(directoryId)
+		return directoryApi.loadDirectoriesStack(directoryId)
 	}
 
 	deletedStacks(boardId) {

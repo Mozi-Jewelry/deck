@@ -187,7 +187,11 @@ export default {
 
 		const self = this
 		this.interval = setInterval(async function() {
-		   await self.$store.dispatch('loadStacks', self.id)
+				if (self.type === 'directory') {
+					await self.$store.dispatch('loadDirectoryStacks', self.id)
+				} else {
+					await self.$store.dispatch('loadStacks', self.id)
+				}
 		}, 10000)
 	},
 	beforeDestroy() {
