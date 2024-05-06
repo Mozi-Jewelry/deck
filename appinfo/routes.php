@@ -47,6 +47,9 @@ return [
 		['name' => 'board#transferOwner', 'url' => '/boards/{boardId}/transferOwner', 'verb' => 'PUT'],
 		['name' => 'board#export', 'url' => '/boards/{boardId}/export', 'verb' => 'GET'],
 
+		// directories
+		['name' => 'directory#read', 'url' => '/directory/{directoryId}', 'verb' => 'GET'],
+
 		// stacks
 		['name' => 'stack#index', 'url' => '/stacks/{boardId}', 'verb' => 'GET'],
 		['name' => 'stack#create', 'url' => '/stacks', 'verb' => 'POST'],

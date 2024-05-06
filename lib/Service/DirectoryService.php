@@ -89,6 +89,11 @@ class DirectoryService {
 		return $directoriesPrepared;
 	}
 
+	public function findById(int $directoryId): array
+	{
+		return $this->directoryMapper->findById($directoryId);
+	}
+
 	public function getDirectoryCards($directoryId): array
 	{
 		$directory = $this->directoryMapper->findById($directoryId);
