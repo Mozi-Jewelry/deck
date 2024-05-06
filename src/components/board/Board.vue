@@ -35,7 +35,7 @@
 				<h2>{{ t('deck', 'Board not found') }}</h2>
 				<p />
 			</div>
-			<NcEmptyContent v-else-if="isEmpty && isNotDirectory" key="empty">
+			<NcEmptyContent v-else-if="isEmpty" key="empty">
 				<template #icon>
 					<DeckIcon />
 				</template>
