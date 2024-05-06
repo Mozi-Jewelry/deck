@@ -22,7 +22,7 @@
 
 <template>
 	<div class="board-wrapper" :tabindex="-1">
-		<Controls :board="board" />
+		<Controls :board="board" v-if="isNotDirectory"/>
 
 		<transition name="fade" mode="out-in">
 			<div v-if="loading" key="loading" class="emptycontent">
@@ -30,7 +30,7 @@
 				<h2>{{ t('deck', 'Loading board') }}</h2>
 				<p />
 			</div>
-			<div v-else-if="!board" key="notfound" class="emptycontent">
+			<div v-else-if="!board && !isNotDirectory" key="notfound" class="emptycontent">
 				<div class="icon icon-deck" />
 				<h2>{{ t('deck', 'Board not found') }}</h2>
 				<p />
@@ -42,7 +42,7 @@
 				<template #title>
 					{{ t('deck', 'No lists available') }}
 				</template>
-				<template v-if="canManage" #action>
+				<template v-if="isNotDirectory && canManage" #action>
 					{{ t('deck', 'Create a new list to add cards to this board') }}
 					<form @submit.prevent="addNewStack()">
 						<input id="new-stack-input-main"
@@ -76,7 +76,7 @@
 						data-click-closes-sidebar="true"
 						data-dragscroll-enabled
 						class="stack-draggable-wrapper">
-						<Stack :stack="stack" :dragging="draggingStack" data-click-closes-sidebar="true" />
+						<Stack :stack="stack" :dragging="isNotDirectory && draggingStack" data-click-closes-sidebar="true" />
 					</Draggable>
 				</Container>
 			</div>
