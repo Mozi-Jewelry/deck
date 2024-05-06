@@ -15,7 +15,7 @@ use Sabre\HTTP\Util;
  *
  * @package OCA\Deck\Controller
  */
-class DirectoryApiController extends ApiController
+class DirectoryController extends ApiController
 {
 	/**
 	 * @param string $appName
