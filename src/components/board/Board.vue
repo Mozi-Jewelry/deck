@@ -22,9 +22,9 @@
 
 <template>
 	<div class="board-wrapper" :tabindex="-1">
-		<Controls :board="board"/>
+		<Controls :board="board" />
 
-		<transition name="fade" mode="out-in" v-if="isNotDirectory">
+		<transition name="fade" mode="out-in">
 			<div v-if="loading" key="loading" class="emptycontent">
 				<div class="icon icon-loading" />
 				<h2>{{ t('deck', 'Loading board') }}</h2>
@@ -76,7 +76,7 @@
 						data-click-closes-sidebar="true"
 						data-dragscroll-enabled
 						class="stack-draggable-wrapper">
-						<Stack :stack="stack" :dragging="isNotDirectory && draggingStack" data-click-closes-sidebar="true" />
+						<Stack :stack="stack" :dragging="draggingStack" data-click-closes-sidebar="true" />
 					</Draggable>
 				</Container>
 			</div>
@@ -237,9 +237,7 @@ export default {
 		},
 
 		onMouseDown(event) {
-			if (!this.isNotDirectory) {
-				this.startMouseDrag(event)
-			}
+			this.startMouseDrag(event)
 		},
 
 		startMouseDrag(event) {
