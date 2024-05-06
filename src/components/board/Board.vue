@@ -23,14 +23,16 @@
 <template>
 	<div class="board-wrapper" :tabindex="-1">
 		<Controls :board="board" v-if="isNotDirectory"/>
-	  <div v-if="isNotDirectory" style="margin-top:50px"></div>
+
+		<div v-if="isNotDirectory" style="margin-top:50px"></div>
+
 		<transition name="fade" mode="out-in">
 			<div v-if="loading" key="loading" class="emptycontent">
 				<div class="icon icon-loading" />
 				<h2>{{ t('deck', 'Loading board') }}</h2>
 				<p />
 			</div>
-			<div v-else-if="!board && !isNotDirectory" key="notfound" class="emptycontent">
+			<div v-else-if="!board && isNotDirectory" key="notfound" class="emptycontent">
 				<div class="icon icon-deck" />
 				<h2>{{ t('deck', 'Board not found') }}</h2>
 				<p />
