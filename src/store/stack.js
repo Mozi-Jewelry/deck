@@ -35,7 +35,7 @@ export default {
 			return state.stacks.filter((stack) => stack.boardId === id).sort((a, b) => a.order - b.order)
 		},
 		stacksByDirectory: state => (id) => {
-			return state.stacks.filter((stack) => stack.boardId === id).sort((a, b) => a.order - b.order)
+			return state.stacks
 		},
 		stackById: state => (id) => {
 			return state.stacks.find((stack) => stack.id === id)

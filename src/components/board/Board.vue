@@ -241,7 +241,11 @@ export default {
 		},
 
 		startMouseDrag(event) {
-			if (!('dragscrollEnabled' in event.target.dataset) || !this.isNotDirectory) {
+			if (!('dragscrollEnabled' in event.target.dataset)) {
+				return
+			}
+
+			if(!this.isNotDirectory) {
 				return
 			}
 
@@ -254,12 +258,20 @@ export default {
 		},
 
 		handleMouseDrag(event) {
+			if(!this.isNotDirectory) {
+				return
+			}
+
 			event.preventDefault()
 			const deltaX = event.clientX - this.currentMousePosX
 			this.$refs.board.scrollLeft = this.currentScrollPosX - deltaX
 		},
 
 		stopMouseDrag(event) {
+			if(!this.isNotDirectory) {
+				return
+			}
+
 			window.removeEventListener('mousemove', this.handleMouseDrag)
 			window.removeEventListener('mouseup', this.stopMouseDrag)
 			window.removeEventListener('mouseleave', this.stopMouseDrag)
