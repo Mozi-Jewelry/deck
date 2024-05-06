@@ -22,9 +22,9 @@
 
 <template>
 	<div class="board-wrapper" :tabindex="-1">
-		<Controls :board="board" v-if="isNotDirectory"/>
+		<Controls :board="board"/>
 
-		<transition name="fade" mode="out-in">
+		<transition name="fade" mode="out-in" v-if="isNotDirectory">
 			<div v-if="loading" key="loading" class="emptycontent">
 				<div class="icon icon-loading" />
 				<h2>{{ t('deck', 'Loading board') }}</h2>
