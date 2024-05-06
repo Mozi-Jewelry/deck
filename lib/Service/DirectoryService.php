@@ -123,6 +123,6 @@ class DirectoryService {
 		}
 
 		$directory->setStacks($stacks);
-		return $directory;
+		return $directory->getStacks();
 	}
 }
