@@ -22,7 +22,7 @@
 
 <template>
 	<div class="board-wrapper" :tabindex="-1">
-		<Controls :board="board" />
+		<Controls :board="board" v-if="isNotDirectory"/>
 
 		<transition name="fade" mode="out-in">
 			<div v-if="loading" key="loading" class="emptycontent">
@@ -35,7 +35,7 @@
 				<h2>{{ t('deck', 'Board not found') }}</h2>
 				<p />
 			</div>
-			<NcEmptyContent v-else-if="isEmpty" key="empty">
+			<NcEmptyContent v-else-if="isEmpty && isNotDirectory" key="empty">
 				<template #icon>
 					<DeckIcon />
 				</template>
@@ -76,7 +76,7 @@
 						data-click-closes-sidebar="true"
 						data-dragscroll-enabled
 						class="stack-draggable-wrapper">
-						<Stack :stack="stack" :dragging="draggingStack" data-click-closes-sidebar="true" />
+						<Stack :stack="stack" :dragging="isNotDirectory && draggingStack" data-click-closes-sidebar="true" />
 					</Draggable>
 				</Container>
 			</div>
@@ -166,6 +166,9 @@ export default {
 		isEmpty() {
 			return this.stacksByBoard.length === 0
 		},
+		isNotDirectory() {
+			return this.type !== 'directory'
+		}
 	},
 	watch: {
 		id(newValue, oldValue) {
@@ -195,7 +198,7 @@ export default {
 		}, 10000)
 	},
 	beforeDestroy() {
-                clearInterval(this.interval)
+		clearInterval(this.interval)
 		this.session.close()
 	},
 	methods: {
@@ -234,7 +237,9 @@ export default {
 		},
 
 		onMouseDown(event) {
-			this.startMouseDrag(event)
+			if (!this.isNotDirectory) {
+				this.startMouseDrag(event)
+			}
 		},
 
 		startMouseDrag(event) {

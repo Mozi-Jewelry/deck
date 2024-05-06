@@ -98,13 +98,13 @@ class DirectoryService {
 	{
 		$directory = $this->directoryMapper->findById($directoryId);
 		if (!$directory) {
-			return [];
+			return ['error' => 'no directory'];
 		}
 
 		$decks = $this->directoryMapper->getAllBoardsIdFromDirectory($directory->getId());
 		$stacks = [];
 		foreach($decks as $deck) {
-			$deckStacks = $this->stackMapper->findAll($deck->getId());
+			$deckStacks = $this->stackMapper->findAll($deck);
 			/** @var Stack $stack */
 			foreach($deckStacks as $stack) {
 				$title = mb_strtolower($stack->getTitle());
