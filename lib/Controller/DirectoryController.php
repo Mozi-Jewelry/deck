@@ -32,7 +32,6 @@ class DirectoryController extends ApiController
 
 	/**
 	 * @NoAdminRequired
-	 * @CORS
 	 * @NoCSRFRequired
 	 * @param int $directoryId
 	 * @return \OCP\AppFramework\Db\Entity
