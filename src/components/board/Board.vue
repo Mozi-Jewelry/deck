@@ -198,8 +198,12 @@ export default {
 		async fetchData() {
 			this.loading = true
 			try {
-				await this.$store.dispatch('loadBoardById', this.id)
-				await this.$store.dispatch('loadStacks', this.id)
+				if (this.type === 'directory') {
+					await this.$store.dispatch('loadStacks', this.id, true)
+				} else {
+					await this.$store.dispatch('loadBoardById', this.id)
+					await this.$store.dispatch('loadStacks', this.id)
+				}
 
 				this.session?.close()
 				this.session = createSession(this.id)
