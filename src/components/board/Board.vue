@@ -21,10 +21,8 @@
   -->
 
 <template>
-	<div class="board-wrapper" :tabindex="-1">
+	<div class="board-wrapper" :tabindex="-1" :style="[isNotDirectory ? { 'margin-top': '50px' } : {  }]">
 		<Controls :board="board" v-if="isNotDirectory"/>
-
-		<div v-if="isNotDirectory" style="margin-top:50px"></div>
 
 		<transition name="fade" mode="out-in">
 			<div v-if="loading" key="loading" class="emptycontent">
@@ -157,7 +155,7 @@ export default {
 		]),
 		stacksByBoard() {
 			if (this.type === 'directory') {
-				 return this.$store.getters.stacksByDirectory(this.board.id)
+				 return this.$store.getters.stacksByDirectory(this.id)
 			}
 
 			return this.$store.getters.stacksByBoard(this.board.id)
