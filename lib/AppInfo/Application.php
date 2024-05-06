@@ -181,7 +181,7 @@ class Application extends App implements IBootstrap {
 		$context->registerNotifierService(Notifier::class);
 		$context->registerEventListener(LoadAdditionalScriptsEvent::class, ResourceAdditionalScriptsListener::class);
 
-		$context->registerTeamResourceProvider(DeckTeamResourceProvider::class);
+//		$context->registerTeamResourceProvider(DeckTeamResourceProvider::class);
 	}
 
 	public function registerCommentsEntity(IEventDispatcher $eventDispatcher): void {
