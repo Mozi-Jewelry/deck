@@ -46,6 +46,12 @@ class DirectoryApiController extends ApiController
 		return $response;
 	}
 
+	/**
+	 * @NoAdminRequired
+	 * @CORS
+	 * @NoCSRFRequired
+	 * @throws StatusException
+	 */
 	public function show(int $directoryId)
 	{
 		$stacks = $this->directoryService->getDirectoryCards($directoryId);
