@@ -28,7 +28,7 @@ class DirectoryMapper extends QBMapper {
 		return $this->findEntities($qb);
 	}
 
-	public function findById($directoryId): array
+	public function findById($directoryId): Directory
 	{
 		$qb = $this->db->getQueryBuilder();
 		$qb->select('*')
