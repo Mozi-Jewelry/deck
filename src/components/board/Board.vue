@@ -199,7 +199,7 @@ export default {
 			this.loading = true
 			try {
 				if (this.type === 'directory') {
-					await this.$store.dispatch('loadStacks', this.id, true)
+					await this.$store.dispatch('loadDirectoryStacks', this.id)
 				} else {
 					await this.$store.dispatch('loadBoardById', this.id)
 					await this.$store.dispatch('loadStacks', this.id)
