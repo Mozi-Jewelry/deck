@@ -62,6 +62,11 @@ class DirectoryMapper extends QBMapper {
 			->where($qb->expr()->eq('directory_id', $qb->createNamedParameter($directoryId, IQueryBuilder::PARAM_INT)));;
 
 		$result = $qb->executeQuery();
-		return array_map(fn($directory) => $directory['deck_id'], $result);
+		$directories = [];
+		foreach ($result as $directory){
+			$directories[] = $directory['deck_id'];
+		}
+
+		return $directories;
 	}
 }
