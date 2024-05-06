@@ -21,7 +21,7 @@
   -->
 
 <template>
-	<div class="board-wrapper" :tabindex="-1" :style="[isNotDirectory ? { 'margin-top': '50px' } : {  }]">
+	<div class="board-wrapper" :tabindex="-1" :style="[!isNotDirectory ? { 'margin-top': '50px' } : {  }]">
 		<Controls :board="board" v-if="isNotDirectory"/>
 
 		<transition name="fade" mode="out-in">
@@ -76,7 +76,7 @@
 						data-click-closes-sidebar="true"
 						data-dragscroll-enabled
 						class="stack-draggable-wrapper">
-						<Stack :stack="stack" :dragging="isNotDirectory && draggingStack" data-click-closes-sidebar="true" />
+						<Stack :stack="stack" :dragging="!isNotDirectory && draggingStack" data-click-closes-sidebar="true" />
 					</Draggable>
 				</Container>
 			</div>
@@ -241,7 +241,7 @@ export default {
 		},
 
 		startMouseDrag(event) {
-			if (!('dragscrollEnabled' in event.target.dataset) || this.isNotDirectory) {
+			if (!('dragscrollEnabled' in event.target.dataset) || !this.isNotDirectory) {
 				return
 			}
 
