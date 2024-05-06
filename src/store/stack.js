@@ -88,10 +88,6 @@ export default {
 				call = 'loadArchivedStacks'
 			}
 
-			if (directory === true) {
-				call = 'loadDirectoryStacks'
-			}
-
 			const stacks = await apiClient[call](boardId)
 			const cards = []
 			for (const i in stacks) {

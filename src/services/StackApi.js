@@ -48,7 +48,7 @@ export class StackApi {
 	}
 
 	loadDirectoryStacks(directoryId) {
-		return DirectoryApi.loadDirectoriesStack(directoryId)
+		return (new DirectoryApi).loadDirectoriesStack(directoryId)
 	}
 
 	deletedStacks(boardId) {
