@@ -23,7 +23,7 @@
 <template>
 	<div class="board-wrapper" :tabindex="-1">
 		<Controls :board="board" v-if="isNotDirectory"/>
-
+	  <div v-if="isNotDirectory" style="margin-top:50px"></div>
 		<transition name="fade" mode="out-in">
 			<div v-if="loading" key="loading" class="emptycontent">
 				<div class="icon icon-loading" />
@@ -241,7 +241,7 @@ export default {
 		},
 
 		startMouseDrag(event) {
-			if (!('dragscrollEnabled' in event.target.dataset)) {
+			if (!('dragscrollEnabled' in event.target.dataset) || this.isNotDirectory) {
 				return
 			}
 
