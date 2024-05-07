@@ -103,13 +103,15 @@ class DirectoryService {
 						$stacks[$title] = $stack;
 					}
 
-					$cards = $this->cardMapper->findAllByStack($stack->getId());
-					$stacks[$title]->setCards(
-						array_merge(
-							$stacks[$title]->getCards(),
-							$this->cardService->enrichCards($cards)
-						)
-					);
+					$cards = $this->cardMapper->findAll($stack->getId());
+					if (\count($cards) === 0) {
+						continue;
+					}
+
+					$stacks[$title]->setCards(array_merge(
+						$stacks[$title]->getCards(),
+						$this->cardService->enrichCards($cards)
+					));
 				}
 			} catch (NoPermissionException $e) {
 				continue;
