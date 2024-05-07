@@ -104,7 +104,7 @@
 		</NcModal>
 
 		<transition name="slide-top" appear>
-			<div v-if="showAddCard" class="stack__card-add">
+			<div v-if="showAddCard && isNotDirectory" class="stack__card-add">
 				<form :class="{ 'icon-loading-small': stateCardCreating }"
 					@submit.prevent.stop="clickAddCard()">
 					<label for="new-stack-input-main" class="hidden-visually">{{ t('deck', 'Add a new card') }}</label>
