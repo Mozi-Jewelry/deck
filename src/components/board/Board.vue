@@ -170,7 +170,7 @@ export default {
 			return this.type !== 'directory'
 		},
 		isDirectory() {
-			return !this.isNotDirectory()
+			return this.type === 'directory'
 		}
 	},
 	watch: {
