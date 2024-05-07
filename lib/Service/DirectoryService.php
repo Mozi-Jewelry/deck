@@ -1,29 +1,13 @@
 <?php
 namespace OCA\Deck\Service;
 
-use OCA\Deck\Activity\ActivityManager;
-use OCA\Deck\Activity\ChangeSet;
-use OCA\Deck\AppInfo\Application;
-use OCA\Deck\BadRequestException;
 use OCA\Deck\Db\Acl;
-use OCA\Deck\Db\Board;
+use OCA\Deck\Db\BoardMapper;
 use OCA\Deck\Db\CardMapper;
 use OCA\Deck\Db\Directory;
 use OCA\Deck\Db\DirectoryMapper;
-use OCA\Deck\Db\IPermissionMapper;
-use OCA\Deck\Db\Label;
-use OCA\Deck\Db\LabelMapper;
-use OCA\Deck\Db\Session;
-use OCA\Deck\Db\SessionMapper;
 use OCA\Deck\Db\Stack;
 use OCA\Deck\Db\StackMapper;
-use OCA\Deck\Event\AclCreatedEvent;
-use OCA\Deck\Event\AclDeletedEvent;
-use OCA\Deck\Event\AclUpdatedEvent;
-use OCA\Deck\Event\BoardUpdatedEvent;
-use OCA\Deck\NoPermissionException;
-use OCA\Deck\Notification\NotificationHelper;
-use OCA\Deck\Validators\BoardServiceValidator;
 use OCP\AppFramework\Db\DoesNotExistException;
 use OCP\AppFramework\Db\MultipleObjectsReturnedException;
 use OCP\DB\Exception as DbException;
@@ -42,9 +26,11 @@ class DirectoryService {
 
 	public function __construct(
 		private DirectoryMapper $directoryMapper,
+		private BoardMapper $boardMapper,
 		private BoardService $boardService,
 		private StackMapper $stackMapper,
 		private CardMapper $cardMapper,
+		private PermissionService $permissionService,
 		private ?string $userId
 	) {
 
@@ -104,6 +90,8 @@ class DirectoryService {
 		$decks = $this->directoryMapper->getAllBoardsIdFromDirectory($directory->getId());
 		$stacks = [];
 		foreach($decks as $deck) {
+			$this->permissionService->checkPermission($this->boardMapper, $deck, Acl::PERMISSION_READ);
+
 			$deckStacks = $this->stackMapper->findAll($deck);
 			/** @var Stack $stack */
 			foreach($deckStacks as $stack) {
