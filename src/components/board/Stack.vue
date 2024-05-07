@@ -141,7 +141,7 @@
 				<transition :appear="animate && !card.animated && (card.animated=true)"
 					:appear-class="'zoom-appear-class'"
 					:appear-active-class="'zoom-appear-active-class'">
-					<CardItem :id="card.id" :type="type" :dragging="draggingCard" />
+					<CardItem :id="card.id" :type="type" :dragging="isNotDirectory && draggingCard" />
 				</transition>
 			</Draggable>
 		</Container>
@@ -220,6 +220,12 @@ export default {
 				}
 				return !card.archived
 			})
+		},
+		isDirectory() {
+			return this.type === 'directory'
+		},
+		isNotDirectory() {
+			return this.type !== 'directory'
 		},
 		dragHandleSelector() {
 			return this.canEdit && !this.showArchived ? null : '.no-drag'
