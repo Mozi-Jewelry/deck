@@ -2,6 +2,8 @@
 namespace OCA\Deck\Service;
 
 use OCA\Deck\Db\Acl;
+use OCA\Deck\Db\Assignment;
+use OCA\Deck\Db\AssignmentMapper;
 use OCA\Deck\Db\BoardMapper;
 use OCA\Deck\Db\CardMapper;
 use OCA\Deck\Db\Directory;
@@ -31,8 +33,8 @@ class DirectoryService {
 		private BoardService $boardService,
 		private StackMapper $stackMapper,
 		private CardMapper $cardMapper,
-		private CardService $cardService,
 		private PermissionService $permissionService,
+		private AssignmentMapper $assignedUsersMapper,
 		private ?string $userId
 	) {
 
@@ -86,11 +88,12 @@ class DirectoryService {
 	{
 		$directory = $this->directoryMapper->findById($directoryId);
 		if (!$directory) {
-			return [];
+			return ['error' => 'no directory'];
 		}
 
 		$decks = $this->directoryMapper->getAllBoardsIdFromDirectory($directory->getId());
 		$stacks = [];
+		$cardIds = [];
 		foreach($decks as $deck) {
 			try {
 				$this->permissionService->checkPermission($this->boardMapper, $deck, Acl::PERMISSION_READ);
@@ -103,18 +106,27 @@ class DirectoryService {
 						$stacks[$title] = $stack;
 					}
 
-					$cards = $this->cardMapper->findAll($stack->getId());
-					if (\count($cards) === 0) {
-						continue;
+					$cards = $this->cardMapper->findAllByStack($stack->getId());
+					$fullCards = $stacks[$title]->getCards();
+					foreach ($cards as $card) {
+						$cardIds[] = $card->getId();
+						$fullCard = $this->cardMapper->find($card->getId());
+						array_push($fullCards, $fullCard);
 					}
-
-					$stacks[$title]->setCards(array_merge(
-						$stacks[$title]->getCards(),
-						$this->cardService->enrichCards($cards)
-					));
+					$stacks[$title]->setCards($fullCards);
 				}
 			} catch (NoPermissionException $e) {
 				continue;
+			}
+		}
+
+		$assignedUsers = $this->assignedUsersMapper->findIn($cardIds);
+		foreach($stacks as $stack) {
+			foreach($stack->getCards() as $card) {
+				$cardAssignedUsers = array_values(array_filter($assignedUsers, function (Assignment $assignment) use ($card) {
+					return $assignment->getCardId() === $card->getId();
+				}));
+				$card->setAssignedUsers($cardAssignedUsers);
 			}
 		}
 
