@@ -31,6 +31,7 @@ class DirectoryService {
 		private BoardService $boardService,
 		private StackMapper $stackMapper,
 		private CardMapper $cardMapper,
+		private CardService $cardService,
 		private PermissionService $permissionService,
 		private ?string $userId
 	) {
@@ -85,7 +86,7 @@ class DirectoryService {
 	{
 		$directory = $this->directoryMapper->findById($directoryId);
 		if (!$directory) {
-			return ['error' => 'no directory'];
+			return [];
 		}
 
 		$decks = $this->directoryMapper->getAllBoardsIdFromDirectory($directory->getId());
@@ -103,12 +104,12 @@ class DirectoryService {
 					}
 
 					$cards = $this->cardMapper->findAllByStack($stack->getId());
-					$fullCards = $stacks[$title]->getCards();
-					foreach ($cards as $card) {
-						$fullCard = $this->cardMapper->find($card->getId());
-						array_push($fullCards, $fullCard);
-					}
-					$stacks[$title]->setCards($fullCards);
+					$stacks[$title]->setCards(
+						array_merge(
+							$stacks[$title]->getCards(),
+							$this->cardService->enrichCards($cards)
+						)
+					);
 				}
 			} catch (NoPermissionException $e) {
 				continue;
