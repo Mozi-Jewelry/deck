@@ -152,7 +152,7 @@ export default {
 			return board ? !board.archived && board.permissions.PERMISSION_EDIT : false
 		},
 		inlineEditingBlocked() {
-			return this.type === 'board' && (this.isArchived || this.showArchived || !this.canEdit || this.standalone)
+			return this.type === 'directory' || this.isArchived || this.showArchived || !this.canEdit || this.standalone
 		},
 		card() {
 			return this.item ? this.item : this.$store.getters.cardById(this.id)
