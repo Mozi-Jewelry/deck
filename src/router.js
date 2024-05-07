@@ -92,6 +92,7 @@ const router = new Router({
 				default: (route) => {
 					return {
 						id: parseInt(route.params.id, 10),
+						type: 'board'
 					}
 				},
 			},
