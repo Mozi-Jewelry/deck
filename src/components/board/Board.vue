@@ -191,8 +191,6 @@ export default {
 	created() {
 		this.session = createSession(this.id)
 
-		this.fetchData()
-
 		this.$root.$on('open-card', (cardId) => {
 			this.localModal = cardId
 		})
@@ -207,13 +205,20 @@ export default {
 		}, 10000)
 	},
 	beforeDestroy() {
-		clearInterval(this.interval)
+		if (this.interval) {
+			clearInterval(this.interval)
+		}
+
 		this.session.close()
 	},
 	methods: {
 		async fetchData() {
 			this.loading = true
 			try {
+				if (this.interval) {
+					clearInterval(this.interval)
+				}
+
 				if (this.type === 'directory') {
 					await this.$store.dispatch('loadDirectoryStacks', this.id)
 				} else {
