@@ -89,7 +89,7 @@ class DirectoryService {
 		return $directoriesPrepared;
 	}
 
-	public function findById(int $directoryId): array
+	public function findById(int $directoryId): Directory
 	{
 		return $this->directoryMapper->findById($directoryId);
 	}
