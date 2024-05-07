@@ -55,8 +55,8 @@ class BoardReferenceProvider implements IReferenceProvider {
 		$startIndex = $this->urlGenerator->getAbsoluteURL('/index.php/apps/' . Application::APP_ID);
 
 		// link example: https://nextcloud.local/index.php/apps/deck/#/board/2
-		$noIndexMatch = preg_match('/^' . preg_quote($start, '/') . '(?:\/#!?)?\/board|directory\/[0-9]+$/', $referenceText) === 1;
-		$indexMatch = preg_match('/^' . preg_quote($startIndex, '/') . '(?:\/#!?)?\/board|directory\/[0-9]+$/', $referenceText) === 1;
+		$noIndexMatch = preg_match('/^' . preg_quote($start, '/') . '(?:\/#!?)?\/board\/[0-9]+$/', $referenceText) === 1;
+		$indexMatch = preg_match('/^' . preg_quote($startIndex, '/') . '(?:\/#!?)?\/board\/[0-9]+$/', $referenceText) === 1;
 
 		return $noIndexMatch || $indexMatch;
 	}
