@@ -8,6 +8,7 @@ use OCA\Deck\Db\Directory;
 use OCA\Deck\Db\DirectoryMapper;
 use OCA\Deck\Db\Stack;
 use OCA\Deck\Db\StackMapper;
+use OCA\Deck\NoPermissionException;
 use OCP\AppFramework\Db\DoesNotExistException;
 use OCP\AppFramework\Db\MultipleObjectsReturnedException;
 use OCP\DB\Exception as DbException;
@@ -90,23 +91,27 @@ class DirectoryService {
 		$decks = $this->directoryMapper->getAllBoardsIdFromDirectory($directory->getId());
 		$stacks = [];
 		foreach($decks as $deck) {
-			$this->permissionService->checkPermission($this->boardMapper, $deck, Acl::PERMISSION_READ);
+			try {
+				$this->permissionService->checkPermission($this->boardMapper, $deck, Acl::PERMISSION_READ);
 
-			$deckStacks = $this->stackMapper->findAll($deck);
-			/** @var Stack $stack */
-			foreach($deckStacks as $stack) {
-				$title = mb_strtolower(trim($stack->getTitle()));
-				if (!$stacks[$title]) {
-					$stacks[$title] = $stack;
-				}
+				$deckStacks = $this->stackMapper->findAll($deck);
+				/** @var Stack $stack */
+				foreach ($deckStacks as $stack) {
+					$title = mb_strtolower(trim($stack->getTitle()));
+					if (!$stacks[$title]) {
+						$stacks[$title] = $stack;
+					}
 
-				$cards = $this->cardMapper->findAllByStack($stack->getId());
-				$fullCards = $stacks[$title]->getCards();
-				foreach ($cards as $card) {
-					$fullCard = $this->cardMapper->find($card->getId());
-					array_push($fullCards, $fullCard);
+					$cards = $this->cardMapper->findAllByStack($stack->getId());
+					$fullCards = $stacks[$title]->getCards();
+					foreach ($cards as $card) {
+						$fullCard = $this->cardMapper->find($card->getId());
+						array_push($fullCards, $fullCard);
+					}
+					$stacks[$title]->setCards($fullCards);
 				}
-				$stacks[$title]->setCards($fullCards);
+			} catch (NoPermissionException $e) {
+				continue;
 			}
 		}
 
