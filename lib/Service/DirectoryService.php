@@ -105,6 +105,7 @@ class DirectoryService {
 					$title = mb_strtolower(trim($stack->getTitle()));
 					if (!$stacks[$title]) {
 						$stacks[$title] = $stack;
+						$stacks[$title]->setDirectoryId($directory->getId());
 					}
 
 					$cards = $this->cardMapper->findAllByStack($stack->getId());

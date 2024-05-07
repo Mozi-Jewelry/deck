@@ -107,7 +107,6 @@ export default {
 
 			for (const i in stacks) {
 				let stack = stacks[i]
-				stack.directoryId = directoryId
 
 				for (const j in stack.cards) {
 					let card = stack.cards[j]

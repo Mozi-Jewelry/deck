@@ -8,11 +8,13 @@ namespace OCA\Deck\Db;
  */
 class Directory extends RelationalEntity {
 	protected $name;
+	protected $directoryId;
 	protected $boards = [];
 	protected $stacks = [];
 
 	public function __construct() {
 		$this->addType('id', 'integer');
+		$this->addType('directoryId', 'integer');
 		$this->addRelation('boards');
 		$this->shared = -1;
 	}
@@ -43,5 +45,16 @@ class Directory extends RelationalEntity {
 	/** @returns Board[]|null */
 	public function getBoards(): ?array {
 		return $this->boards;
+	}
+
+	public function setDirectoryId($directoryId)
+	{
+		$this->directoryId = $directoryId;
+	}
+
+	/** @returns int|null */
+	public function getDirectoryId(): ?int
+	{
+		return $this->directoryId;
 	}
 }

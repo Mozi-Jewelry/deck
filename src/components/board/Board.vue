@@ -191,6 +191,8 @@ export default {
 	created() {
 		this.session = createSession(this.id)
 
+		this.fetchData()
+
 		this.$root.$on('open-card', (cardId) => {
 			this.localModal = cardId
 		})
