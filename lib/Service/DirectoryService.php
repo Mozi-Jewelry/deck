@@ -108,7 +108,7 @@ class DirectoryService {
 						$stacks[$title]->setDirectoryId($directory->getId());
 					}
 
-					$cards = $this->cardMapper->findAllByStack($stack->getId());
+					$cards = $this->cardMapper->findAll($stack->getId());
 					$fullCards = $stacks[$title]->getCards();
 					foreach ($cards as $card) {
 						$cardIds[] = $card->getId();
