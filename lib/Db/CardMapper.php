@@ -142,6 +142,8 @@ class CardMapper extends QBMapper implements IPermissionMapper {
 		$labels = $this->labelMapper->findAssignedLabelsForCard($card->getId());
 		$card->setLabels($labels);
 		$this->mapOwner($card);
+
+
 		return $card;
 	}
 
