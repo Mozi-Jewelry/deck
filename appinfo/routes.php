@@ -29,6 +29,7 @@ return [
 		['name' => 'page#indexBoard', 'url' => '/board/{boardId}', 'verb' => 'GET'],
 		['name' => 'page#indexBoardDetails', 'url' => '/board/{boardId}/details', 'verb' => 'GET'],
 		['name' => 'page#indexCard', 'url' => '/board/{boardId}/card/{cardId}', 'verb' => 'GET'],
+		['name' => 'page#indexDirectory', 'url' => '/directory/{directoryId}', 'verb' => 'GET'],
 
 		['name' => 'page#redirectToCard', 'url' => '/card/{cardId}', 'verb' => 'GET'],
 

@@ -119,6 +119,12 @@ class PageController extends Controller {
 	#[NoAdminRequired]
 	#[NoCSRFRequired]
 	public function indexCard(int $cardId): TemplateResponse {
+			return $this->index();
+	}
+
+	#[NoAdminRequired]
+	#[NoCSRFRequired]
+	public function indexDirectory(int $directoryId): TemplateResponse {
 		return $this->index();
 	}
 
