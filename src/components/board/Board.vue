@@ -154,7 +154,7 @@ export default {
 			'canManage',
 		]),
 		stacksByBoard() {
-			if (this.type === 'directory') {
+			if (this.isDirectory) {
 				 return this.$store.getters.stacksByDirectory(this.id)
 			}
 
@@ -168,6 +168,9 @@ export default {
 		},
 		isNotDirectory() {
 			return this.type !== 'directory'
+		},
+		isDirectory() {
+			return !this.isNotDirectory()
 		}
 	},
 	watch: {
@@ -183,14 +186,16 @@ export default {
 	},
 	created() {
 		this.session = createSession(this.id)
+
 		this.fetchData()
+
 		this.$root.$on('open-card', (cardId) => {
 			this.localModal = cardId
 		})
 
 		const self = this
 		this.interval = setInterval(async function() {
-				if (self.type === 'directory') {
+				if (self.isDirectory) {
 					await self.$store.dispatch('loadDirectoryStacks', self.id)
 				} else {
 					await self.$store.dispatch('loadStacks', self.id)
@@ -245,7 +250,7 @@ export default {
 				return
 			}
 
-			if(!this.isNotDirectory) {
+			if(this.isDirectory) {
 				return
 			}
 
@@ -258,7 +263,7 @@ export default {
 		},
 
 		handleMouseDrag(event) {
-			if(!this.isNotDirectory) {
+			if(this.isDirectory) {
 				return
 			}
 
@@ -268,7 +273,7 @@ export default {
 		},
 
 		stopMouseDrag(event) {
-			if(!this.isNotDirectory) {
+			if(this.isDirectory) {
 				return
 			}
 

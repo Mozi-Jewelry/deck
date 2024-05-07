@@ -104,6 +104,7 @@ export default {
 		async loadDirectoryStacks({ commit }, directoryId) {
 			const stacks = await apiClient.loadDirectoryStacks(directoryId)
 			const cards = []
+
 			for (const i in stacks) {
 				let stack = stacks[i]
 				stack.directoryId = directoryId
@@ -114,6 +115,7 @@ export default {
 				delete stack.cards
 				commit('addStack', stack)
 			}
+
 			commit('setCards', cards)
 		},
 		createStack({ commit }, stack) {
