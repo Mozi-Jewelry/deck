@@ -161,6 +161,10 @@ export default {
 			return this.$store.getters.stacksByBoard(this.board.id)
 		},
 		dragHandleSelector() {
+			if (this.type === 'directory') {
+				return '.no-drag'
+			}
+
 			return this.canEdit ? '.stack__title' : '.no-drag'
 		},
 		isEmpty() {
