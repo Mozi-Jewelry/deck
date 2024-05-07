@@ -111,7 +111,7 @@ export default {
 
 				for (const j in stack.cards) {
 					let card = stack.cards[j]
-					card.boardId = stack.relatedBoard.id
+					card.boardId = card.relatedBoard.id
 					cards.push(card)
 				}
 				delete stack.cards
