@@ -35,6 +35,7 @@ use Sabre\VObject\Component\VCalendar;
 class Stack extends RelationalEntity {
 	protected $title;
 	protected $boardId;
+	protected $directoryId;
 	protected $deletedAt = 0;
 	protected $lastModified = 0;
 	protected $cards = [];
@@ -75,5 +76,17 @@ class Stack extends RelationalEntity {
 
 	public function getETag() {
 		return md5((string)$this->getLastModified());
+	}
+
+
+	public function setDirectoryId($directoryId)
+	{
+		$this->directoryId = $directoryId;
+	}
+
+	/** @returns int|null */
+	public function getDirectoryId(): ?int
+	{
+		return $this->directoryId;
 	}
 }
