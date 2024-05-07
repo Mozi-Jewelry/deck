@@ -107,7 +107,7 @@ class DirectoryService {
 			$deckStacks = $this->stackMapper->findAll($deck);
 			/** @var Stack $stack */
 			foreach($deckStacks as $stack) {
-				$title = mb_strtolower($stack->getTitle());
+				$title = mb_strtolower(trim($stack->getTitle()));
 				if (!$stacks[$title]) {
 					$stacks[$title] = $stack;
 				}
