@@ -110,7 +110,9 @@ export default {
 				stack.directoryId = directoryId
 
 				for (const j in stack.cards) {
-					cards.push(stack.cards[j])
+					let card = stack.cards[j]
+					card.boardId = stack.relatedBoard.id
+					cards.push(card)
 				}
 				delete stack.cards
 				commit('addStack', stack)
