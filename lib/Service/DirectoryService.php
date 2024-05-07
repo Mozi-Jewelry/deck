@@ -101,6 +101,7 @@ class DirectoryService {
 				$deckStacks = $this->stackMapper->findAll($deck);
 				/** @var Stack $stack */
 				foreach ($deckStacks as $stack) {
+					$board = $this->boardService->find($stack->getBoardId(), false);
 					$title = mb_strtolower(trim($stack->getTitle()));
 					if (!$stacks[$title]) {
 						$stacks[$title] = $stack;
@@ -111,6 +112,7 @@ class DirectoryService {
 					foreach ($cards as $card) {
 						$cardIds[] = $card->getId();
 						$fullCard = $this->cardMapper->find($card->getId());
+						$fullCard->setRelatedBoard($board);
 						array_push($fullCards, $fullCard);
 					}
 					$stacks[$title]->setCards($fullCards);
