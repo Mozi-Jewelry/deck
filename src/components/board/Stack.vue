@@ -141,7 +141,7 @@
 				<transition :appear="animate && !card.animated && (card.animated=true)"
 					:appear-class="'zoom-appear-class'"
 					:appear-active-class="'zoom-appear-active-class'">
-					<CardItem :id="card.id" :dragging="draggingCard" />
+					<CardItem :id="card.id" :type="type" :dragging="draggingCard" />
 				</transition>
 			</Draggable>
 		</Container>
@@ -183,6 +183,10 @@ export default {
 			type: Object,
 			default: undefined,
 		},
+		type: {
+			type: String,
+			default: 'board'
+		}
 	},
 	data() {
 		return {

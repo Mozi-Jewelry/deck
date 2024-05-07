@@ -123,6 +123,10 @@ export default {
 			type: Boolean,
 			default: false,
 		},
+		type: {
+			type: String,
+			default: 'board'
+		}
 	},
 	computed: {
 		...mapState({
@@ -148,7 +152,7 @@ export default {
 			return board ? !board.archived && board.permissions.PERMISSION_EDIT : false
 		},
 		inlineEditingBlocked() {
-			return this.isArchived || this.showArchived || !this.canEdit || this.standalone
+			return this.type === 'board' && (this.isArchived || this.showArchived || !this.canEdit || this.standalone)
 		},
 		card() {
 			return this.item ? this.item : this.$store.getters.cardById(this.id)
@@ -175,7 +179,7 @@ export default {
 			return this.$store.getters.config('cardIdBadge')
 		},
 		showMenuAtTitle() {
-			return this.compactMode || (!this.compactMode && !this.hasBadges && !this.hasLabels)
+			return this.type === 'board' && (this.compactMode || (!this.compactMode && !this.hasBadges && !this.hasLabels))
 		},
 		showMenuAtLabels() {
 			if (this.compactMode) {
