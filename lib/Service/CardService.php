@@ -451,7 +451,7 @@ class CardService {
 
 		$hasCurrentUserAssigned = count(
 			array_filter($card->getAssignedUsers() ?? [], function(Assignment $assigment) {
-				return ($assigment->participant->uid ?? $assigment->participant) == $this->currentUser;
+				return ($assigment->getParticipant()->uid ?? $assigment->getParticipant()) == $this->currentUser;
 			})
 		) > 0;
 
