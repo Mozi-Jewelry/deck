@@ -414,7 +414,7 @@ class CardService {
 		return $update;
 	}
 
-	private function permissionCanEdit($stackId): boolean
+	private function permissionCanEdit($stackId): bool
 	{
 		try {
 			$this->permissionService->checkPermission($this->stackMapper, $stackId, Acl::PERMISSION_EDIT);
