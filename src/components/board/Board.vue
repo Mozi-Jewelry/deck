@@ -181,9 +181,6 @@ export default {
 		id(newValue, oldValue) {
 			this.fetchData()
 		},
-		type(newValue, oldValue) {
-			this.fetchData()
-		},
 		showArchived() {
 			this.fetchData()
 		},
@@ -223,6 +220,8 @@ export default {
 		async fetchData() {
 			this.loading = true
 			try {
+				this.clearReloadStacks();
+
 				if (this.type === 'directory') {
 					await this.$store.dispatch('loadDirectoryStacks', this.id)
 				} else {
@@ -232,7 +231,6 @@ export default {
 
 				this.session?.close()
 				this.session = createSession(this.id)
-
 				this.reloadStacks()
 			} catch (e) {
 				this.loading = false
