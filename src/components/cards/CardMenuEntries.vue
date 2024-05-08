@@ -63,7 +63,7 @@
 			</template>
 			{{ card.archived ? t('deck', 'Unarchive card') : t('deck', 'Archive card') }}
 		</NcActionButton>
-		<NcActionButton v-if="canEdit"
+		<NcActionButton v-if="canEditBoard && canEdit"
 			icon="icon-delete"
 			:close-after-click="true"
 			@click="deleteCard()">
