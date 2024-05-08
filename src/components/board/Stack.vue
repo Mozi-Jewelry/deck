@@ -232,7 +232,7 @@ export default {
 				return '.no-drag'
 			}
 
-			return this.canEdit && !this.showArchived ? null : '.no-drag'
+			return !this.showArchived ? null : '.no-drag'
 		},
 		cardDetailsInModal: {
 			get() {
