@@ -446,6 +446,9 @@ class CardService {
 		}
 
 		$card = $this->cardMapper->find($id);
+		$assignedUsers = $this->assignedUsersMapper->findAll($card->getId());
+		$card->setAssignedUsers($assignedUsers);
+
 		$hasCurrentUserAssigned = count(array_filter($card->getAssignedUsers() ?? [], function(User $user) {
 			return $user->getId() == $this->currentUser;
 		})) > 0;
