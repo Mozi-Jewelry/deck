@@ -446,9 +446,9 @@ class CardService {
 		}
 
 		$card = $this->cardMapper->find($id);
-		$hasCurrentUserAssigned = !empty(array_filter($card->getAssignedUsers(), function(User $user) {
-			return $user->getId() === $this->currentUser;
-		}));
+		$hasCurrentUserAssigned = count(array_filter($card->getAssignedUsers(), function(User $user) {
+			return $user->getId() == $this->currentUser;
+		})) > 0;
 
 		if (!$hasCurrentUserAssigned && !$this->permissionCanEdit($stackId)) {
 			throw new StatusException('Operation not allowed. This card not move other stack.');
@@ -457,6 +457,7 @@ class CardService {
 		if ($card->getArchived()) {
 			throw new StatusException('Operation not allowed. This card is archived.');
 		}
+
 		$changes = new ChangeSet($card);
 		$card->setStackId($stackId);
 		$this->cardMapper->update($card);
