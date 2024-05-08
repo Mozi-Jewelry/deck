@@ -179,15 +179,12 @@ export default {
 	},
 	watch: {
 		id(newValue, oldValue) {
-			this.reloadStacks()
 			this.fetchData()
 		},
 		type(newValue, oldValue) {
-			this.reloadStacks()
 			this.fetchData()
 		},
 		showArchived() {
-			this.reloadStacks()
 			this.fetchData()
 		},
 	},
@@ -199,8 +196,6 @@ export default {
 		this.$root.$on('open-card', (cardId) => {
 			this.localModal = cardId
 		})
-
-		this.reloadStacks()
 	},
 	beforeDestroy() {
 		this.clearReloadStacks()
@@ -228,10 +223,6 @@ export default {
 		async fetchData() {
 			this.loading = true
 			try {
-				if (this.interval) {
-					clearInterval(this.interval)
-				}
-
 				if (this.type === 'directory') {
 					await this.$store.dispatch('loadDirectoryStacks', this.id)
 				} else {
@@ -241,6 +232,8 @@ export default {
 
 				this.session?.close()
 				this.session = createSession(this.id)
+
+				this.reloadStacks()
 			} catch (e) {
 				this.loading = false
 				console.error(e)
