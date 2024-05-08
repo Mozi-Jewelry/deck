@@ -179,12 +179,15 @@ export default {
 	},
 	watch: {
 		id(newValue, oldValue) {
+			this.reloadStacks()
 			this.fetchData()
 		},
 		type(newValue, oldValue) {
+			this.reloadStacks()
 			this.fetchData()
 		},
 		showArchived() {
+			this.reloadStacks()
 			this.fetchData()
 		},
 	},
@@ -197,23 +200,31 @@ export default {
 			this.localModal = cardId
 		})
 
-		const self = this
-		this.interval = setInterval(async function() {
+		this.reloadStacks()
+	},
+	beforeDestroy() {
+		this.clearReloadStacks()
+
+		this.session.close()
+	},
+	methods: {
+		clearReloadStacks() {
+			if (this.interval) {
+				clearInterval(this.interval)
+			}
+		},
+		reloadStacks() {
+			this.clearReloadStacks()
+
+			const self = this
+			this.interval = setInterval(async function() {
 				if (self.isDirectory) {
 					await self.$store.dispatch('loadDirectoryStacks', self.id)
 				} else {
 					await self.$store.dispatch('loadStacks', self.id)
 				}
-		}, 10000)
-	},
-	beforeDestroy() {
-		if (this.interval) {
-			clearInterval(this.interval)
-		}
-
-		this.session.close()
-	},
-	methods: {
+			}, 10000)
+		},
 		async fetchData() {
 			this.loading = true
 			try {
