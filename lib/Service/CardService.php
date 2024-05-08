@@ -449,9 +449,11 @@ class CardService {
 		$assignedUsers = $this->assignedUsersMapper->findAll($card->getId());
 		$card->setAssignedUsers($assignedUsers);
 
-		$hasCurrentUserAssigned = count(array_filter($card->getAssignedUsers() ?? [], function(User $user) {
-			return $user->getId() == $this->currentUser;
-		})) > 0;
+		$hasCurrentUserAssigned = count(
+			array_filter($card->getAssignedUsers() ?? [], function(Assignment $assigment) {
+				return ($assigment->participant->uid ?? $assigment->participant) == $this->currentUser;
+			})
+		) > 0;
 
 		if (!$hasCurrentUserAssigned && !$this->permissionCanEdit($stackId)) {
 			throw new StatusException('Operation not allowed. This card not move other stack.');
