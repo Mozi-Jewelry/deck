@@ -39,6 +39,7 @@ use OCA\Deck\Db\ChangeHelper;
 use OCA\Deck\Db\Label;
 use OCA\Deck\Db\LabelMapper;
 use OCA\Deck\Db\StackMapper;
+use OCA\Deck\Db\User;
 use OCA\Deck\Event\CardCreatedEvent;
 use OCA\Deck\Event\CardDeletedEvent;
 use OCA\Deck\Event\CardUpdatedEvent;
@@ -413,6 +414,16 @@ class CardService {
 		return $update;
 	}
 
+	private function permissionCanEdit($stackId): boolean
+	{
+		try {
+			$this->permissionService->checkPermission($this->stackMapper, $stackId, Acl::PERMISSION_EDIT);
+			return true;
+		} catch (NoPermissionException $e) {
+			return false;
+		}
+	}
+
 	/**
 	 * @param $id
 	 * @param $stackId
@@ -427,15 +438,22 @@ class CardService {
 	public function reorder($id, $stackId, $order) {
 		$this->cardServiceValidator->check(compact('id', 'stackId', 'order'));
 
-
-		$this->permissionService->checkPermission($this->cardMapper, $id, Acl::PERMISSION_EDIT);
-		$this->permissionService->checkPermission($this->stackMapper, $stackId, Acl::PERMISSION_EDIT);
+		$this->permissionService->checkPermission($this->cardMapper, $id, Acl::PERMISSION_READ);
+		$this->permissionService->checkPermission($this->stackMapper, $stackId, Acl::PERMISSION_READ);
 
 		if ($this->boardService->isArchived($this->cardMapper, $id)) {
 			throw new StatusException('Operation not allowed. This board is archived.');
 		}
 
 		$card = $this->cardMapper->find($id);
+		$hasCurrentUserAssigned = !empty(array_filter($card->getAssignedUsers(), function(User $user) {
+			return $user->getId() === $this->currentUser;
+		}));
+
+		if (!$hasCurrentUserAssigned && !$this->permissionCanEdit($stackId)) {
+			throw new StatusException('Operation not allowed. This card not move other stack.');
+		}
+
 		if ($card->getArchived()) {
 			throw new StatusException('Operation not allowed. This card is archived.');
 		}
